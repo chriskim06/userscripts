@@ -2,9 +2,9 @@
 // @name        Collapsable Diffs and Linked Branches (GitHub)
 // @namespace   chriskim06
 // @description Adds a toggle to collapse diffs in GitHub's pull request and commit diff interfaces
-// @include     https://github.com/*
+// @include     /^https://github\.com/.*/.*/(commit|pull)/.*$/
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.3.7
+// @version     1.3.8
 // @grant       none
 // @locale      en
 // ==/UserScript==
