@@ -16,9 +16,11 @@ waitForKeyElements('#ghx-pool', getNumPoints);
   
 // jNode is the board
 function getNumPoints(jNode) {
+
   var columns = {};
   var columnHeaders = $('#ghx-column-headers');
   columnHeaders.children('li').each(function() {
+    // Initialize each of the values to 0
     columns[$(this).attr('data-id')] = 0;
   });
   
@@ -27,10 +29,9 @@ function getNumPoints(jNode) {
     // Get each column...
     $(this).children('li').each(function() {
       var id = $(this).attr('data-column-id');
-    
-      // And get each ticket and...
+      // For each ticket in the column...
       $(this).children('div').each(function() {
-        // Add it to the total
+        // Add its point value to the total for the column
         var points = parseInt($(this).find('.ghx-end').find('span.aui-badge').html(), 10);
         if (points > 0) {
           columns[id] += points;
@@ -42,7 +43,7 @@ function getNumPoints(jNode) {
   // Append the total point value for this column to the column's name
   columnHeaders.children('li').each(function() {
     var columnId = $(this).attr('data-id');
-    var columnTitle = $(this).find('h2');
-    columnTitle.append(' (' + columns[columnId] + ')');
+    $(this).find('h2').append(' (' + columns[columnId] + ')');
   });
+
 }

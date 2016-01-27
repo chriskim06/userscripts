@@ -12,6 +12,7 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(function() {
+
   function allBranches() {
     if ($('.repository-content').length) {
       var link = $('.repository-content').find('ul.numbers-summary').find('li:nth-child(2) > a');
@@ -27,4 +28,5 @@ $(function() {
   window.$(document).on('pjax:end', function() {
     allBranches();
   });
+
 });

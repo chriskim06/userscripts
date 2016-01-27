@@ -12,10 +12,12 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(function() {
+
   $(document).on('keydown', function(e) {
     if (!e.shiftKey && e.which === 8 && e.target.nodeName !== 'INPUT') {
       window.history.back();
       return false;
     }
   })
+
 });

@@ -14,10 +14,10 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(function() {
 
-  var url = window.location.href.match(/https:\/\/.*jira.*com/g)[0];
   waitForKeyElements(".js-key-link", addOnClick);
 
   function addOnClick(jNode) {
+    var url = window.location.href.match(/https:\/\/.*jira.*com/g)[0];
     jNode.on('click', function(e) {
       var link = url + jNode.attr('href');
       if (e.metaKey || e.ctrlKey || e.shiftKey) {

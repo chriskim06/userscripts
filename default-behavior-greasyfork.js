@@ -13,11 +13,12 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(function() {
+
   if ($('#script_version_code').length) {
     $('#script_version_code').css('height', '560px');
   }
+
   var checkbox = $('#enable-source-editor-code');
-  
   if (checkbox.length && !checkbox.is(':checked')) {
     checkbox.click();
   }
@@ -25,4 +26,5 @@ $(function() {
   if ($('div#share').length) {
     $('div#share').css('display', 'none');
   }
+
 });
