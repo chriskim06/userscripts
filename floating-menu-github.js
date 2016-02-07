@@ -3,7 +3,7 @@
 // @namespace   chriskim06
 // @description Makes the menu bar in GitHub stay at the top of the page when scrolling
 // @include     https://github.com/*
-// @version     1.0.1
+// @version     1.0.2
 // @grant       none
 // @locale      en
 // ==/UserScript==
