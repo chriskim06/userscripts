@@ -19,5 +19,11 @@
       content[0].style.position = 'relative';
       content[0].style.top = '50px';
     }
+    content = document.getElementsByClassName('container');
+    var footer = content.item(content.length - 1);
+    if (footer !== null) {
+      footer.style.position = 'relative';
+      footer.style.top = '50px';
+    }
   }
 })();
