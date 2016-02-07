@@ -4,7 +4,7 @@
 // @description Adds a toggle to collapse diffs in GitHub's pull request and commit diff interfaces
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.4.0
+// @version     1.4.1
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -23,12 +23,14 @@ $(function() {
           info.prepend(expanded);
           diff.find('.octicon-btn.custom-collapsable').on('click', function() {
             var icon = $(this).children().first().find('path');
+            var blob = diff.children('.data.highlight.blob-wrapper');
             if (icon.attr('d') === 'M0 5l6 6 6-6H0z') {
               icon.attr('d', 'M0 14l6-6L0 2v12z');
+              blob.hide();
             } else {
               icon.attr('d', 'M0 5l6 6 6-6H0z');
+              blob.show();
             }
-            diff.children('.data.highlight.blob-wrapper').slideToggle('fast');
           });
         }
       });
