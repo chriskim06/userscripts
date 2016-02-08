@@ -3,7 +3,7 @@
 // @namespace   chriskim06
 // @description Makes the menu bar in GitHub stay at the top of the page when scrolling
 // @include     https://github.com/*
-// @version     1.0.2
+// @version     1.0.3
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -14,6 +14,11 @@
     menu[0].style.position = 'fixed';
     menu[0].style.zIndex = '10000';
     menu[0].style.width = '100%';
+    var flash = document.getElementById('js-flash-container');
+    if (flash !== null) {
+      flash.style.position = 'relative';
+      flash.style.top = '50px';
+    }
     var content = document.getElementsByClassName('main-content');
     if (content.length) {
       content[0].style.position = 'relative';
