@@ -4,7 +4,7 @@
 // @description Adds buttons to allow you to widen the container when viewing files and hide whitespace when viewing pull request diffs
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.3.3
+// @version     1.3.4
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -41,7 +41,7 @@ $(function() {
     
     // Toggle code container width on click
     $('#code-widen-button').click(function() {
-      if ($('#files').length || $('.repository-content').find('.file').length) {
+      if (($('#files').length && $('#files').is(':visible')) || $('.repository-content').find('.file').length) {
         // If diff is in split mode don't try to widen the container
         if ($('#toc').find('.btn-group > a:last').hasClass('selected')) {
           $(this).blur();
