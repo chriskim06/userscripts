@@ -4,7 +4,7 @@
 // @description Adds buttons to allow you to widen the container when viewing files and hide whitespace when viewing pull request diffs
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.3.5
+// @version     1.3.6
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -41,6 +41,9 @@ $(function() {
     
     // Toggle code container width on click
     $('#code-widen-button').click(function() {
+      var url = window.location.href.replace(/https:\/\/github.com\/.+\/.+\/pull\/[\d]+\/?/, '');
+      var container = $('.container.new-discussion-timeline.experiment-repo-nav');
+      var expanded = $(window).width() * 0.95;
       var diff = $('#files');
       var file = $('.repository-content').find('.file');
       if ((diff.length && diff.is(':visible')) || (file.length && file.is(':visible'))) {
@@ -49,11 +52,13 @@ $(function() {
           $(this).blur();
           return;
         }
-        var container = $('.container.new-discussion-timeline.experiment-repo-nav');
-        var expanded = $(window).width() * 0.95;
         if (container.width() < expanded) {
           container.css('width', expanded + 'px');
         } else {
+          container.css('width', '980px');
+        }
+      } else if (url === '' || url === 'commits') {
+        if (container.width() >= expanded) {
           container.css('width', '980px');
         }
       }
