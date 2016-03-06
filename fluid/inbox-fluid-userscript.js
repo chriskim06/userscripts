@@ -12,21 +12,17 @@
 
 window.fluid.dockBadge = '';
 setTimeout(updateBadge, 1000);
-setInterval(updateBadge, 3000);
+setInterval(updateBadge, 1000);
 
 // Looks for and counts unread emails
 function updateBadge() {
-  var prevCount = window.fluid.dockBadge;
-  var navTitle = document.querySelectorAll('[jsaction="global.navigate_and_refresh"]')[0].textContent.trim();
-  if (navTitle === 'Inbox') {
-    var emptyImage = document.getElementsByClassName('j');
-    if (emptyImage.length === 0) {
-      var unreadEmails = document.getElementsByClassName('ss');
-      var count = unreadEmails.length;
-      window.fluid.dockBadge = (count === 0) ? '' : count;
-      if (window.Notification && count > prevCount) {
-        buildNotification(count);
-      }
+  if (document.getElementsByClassName('bl')[0].getAttribute('title') === 'Inbox') {
+    var unreadEmails = document.getElementsByClassName('ss');
+    var count = unreadEmails.length;
+    var prevCount = window.fluid.dockBadge;
+    window.fluid.dockBadge = (count === 0) ? '' : count;
+    if (count > prevCount && window.Notification) {
+      buildNotification(count);
     }
   }
 }
@@ -37,12 +33,10 @@ function buildNotification(count) {
     showNotification('Inbox', count);
   } else {
     Notification.requestPermission().then(function(result) {
-      if (result === 'denied') {
-        console.log('Permission denied.');
-      } else if (result === 'default') {
-        console.log('The permission request was dismissed.');
-      } else if (result === 'granted') {
+      if (result === 'granted') {
         showNotification('Inbox', count);
+      } else {
+        console.log('Need permission.');
       }
     });
   }
