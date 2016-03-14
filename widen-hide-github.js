@@ -4,7 +4,7 @@
 // @description Adds buttons to allow you to widen the container when viewing files and hide whitespace when viewing pull request diffs
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.3.6
+// @version     1.3.7
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -14,7 +14,6 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 $(function() {
 
   if ($('#user-links').length) {
-
     // Add buttons in the header navbar for widening and hiding whitespace
     $('#user-links').prepend(
         '<li class="header-nav-item">' +
@@ -41,45 +40,46 @@ $(function() {
     
     // Toggle code container width on click
     $('#code-widen-button').click(function() {
-      var url = window.location.href.replace(/https:\/\/github.com\/.+\/.+\/pull\/[\d]+\/?/, '');
       var container = $('.container.new-discussion-timeline.experiment-repo-nav');
       var expanded = $(window).width() * 0.95;
-      var diff = $('#files');
-      var file = $('.repository-content').find('.file');
-      if ((diff.length && diff.is(':visible')) || (file.length && file.is(':visible'))) {
-        // If diff is in split mode don't try to widen the container
-        if ($('#toc').find('.btn-group > a:last').hasClass('selected')) {
-          $(this).blur();
-          return;
+      if ($('#files').is(':visible') || $('.repository-content').find('.file').is(':visible')) {
+        if (!$('#toc').find('.btn-group > a:last').hasClass('selected')) {
+          // Only widen if viewing a single file or changes in unified mode
+          container.css('width', (container.width() < expanded) ? expanded : 980);
         }
-        if (container.width() < expanded) {
-          container.css('width', expanded + 'px');
-        } else {
-          container.css('width', '980px');
-        }
-      } else if (url === '' || url === 'commits') {
-        if (container.width() >= expanded) {
-          container.css('width', '980px');
-        }
+      } else if (container.width() >= expanded) {
+        // Reduce the width on a page if needed
+        container.css('width', 980);
       }
       $(this).blur();
     });
     
-    // Toggle page with ?w=1 appended to the url to show/hide whitespace
+    // Toggle page with the w=1 query param in the url to show/hide whitespace
     $('#hide-whitespace-button').click(function() {
-      if ($('#files').length && $('#files').is(':visible')) {
+      if ($('#files').is(':visible')) {
+        var nav;
         var url = window.location.href;
-        if (url.endsWith('?w=1') || url.endsWith('&w=1')) {
-          window.location.href = url.slice(0, -4);
-        } else if (url.includes('?')) {
-          window.location.href = url + '&w=1';
+        if (url.contains('?w=1')) {
+          // Check if there is more to the query and remove the whitespace query param
+          nav = url.replace((url.includes('&') ? /w=1\&/ : /\?w=1/), '');
+        } else if (url.contains('&w=1')) {
+          // Remove the appended whitespace query param
+          nav = url.replace(/\&w=1/, '');
         } else {
-          window.location.href = url + '?w=1';
+          // Add the whitespace query param
+          var query = url.includes('?') ? '&w=1' : '?w=1';
+          if (url.includes('#')) {
+            // Insert before any anchors in the url
+            nav = url.slice(0, url.indexOf('#')) + query + url.substr(url.indexOf('#'));
+          } else {
+            // Append to the url
+            nav = url + query;
+          }
         }
+        window.location.href = nav;
       }
       $(this).blur();
     });
-    
   }
   
 });
