@@ -4,7 +4,7 @@
 // @description Adds a toggle to collapse diffs in GitHub's pull request and commit diff interfaces
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.4.3
+// @version     1.4.4
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -36,6 +36,10 @@ $(function() {
             var icon = $(this).find('path');
             diff.children('.data.highlight.blob-wrapper').toggle();
             icon.attr('d', (icon.attr('d') === collapsed) ? expanded : collapsed);
+            var allButton = $('#diff-collapse-button');
+            var visible = diffs.children('.data.highlight.blob-wrapper').is(':visible');
+            allButton.attr('data-toggle-state', visible ? 'expanded' : 'collapsed');
+            allButton.text(visible ? 'Collapse All' : 'Expand All');
           });
         }
       });
@@ -43,7 +47,7 @@ $(function() {
       var diffOptions = $('.diffbar-item.dropdown.js-menu-container');
       if (diffOptions.length && diffOptions.find('a').length === 2) {
         // Add an Expand/Collapse All button if its not there
-        var blobs = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper');
+        var blobs = diffs.children('.data.highlight.blob-wrapper');
         diffOptions.find('ul').append(
           '<a id="diff-collapse-button" ' +
             'class="dropdown-item" ' +
@@ -55,10 +59,15 @@ $(function() {
         $('#diff-collapse-button').on('click', function() {
           // Toggle the visibility of all diffs, directions of arrows, and the button
           var state = ($(this).attr('data-toggle-state') === 'expanded');
-          blobs.toggle();
+          if (state) {
+            blobs.hide();
+          } else {
+            blobs.show();
+          }
           $('.octicon-btn.custom-collapsable').find('path').attr('d', state ? collapsed : expanded);
           $(this).attr('data-toggle-state', state ? 'collapsed' : 'expanded');
-          $(this).text(state ? 'Collapse All' : 'Expand All');
+          $(this).text(state ? 'Expand All' : 'Collapse All');
+          diffOptions.removeClass('active');
         });
       }
     }
