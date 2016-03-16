@@ -4,7 +4,7 @@
 // @description Adds buttons to allow you to widen the container when viewing files and hide whitespace when viewing pull request diffs
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.3.7
+// @version     1.3.8
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -43,7 +43,7 @@ $(function() {
       var container = $('.container.new-discussion-timeline.experiment-repo-nav');
       var expanded = $(window).width() * 0.95;
       if ($('#files').is(':visible') || $('.repository-content').find('.file').is(':visible')) {
-        if (!$('#toc').find('.btn-group > a:last').hasClass('selected')) {
+        if ($('meta[name="diff-view"]').attr('content') === 'unified') {
           // Only widen if viewing a single file or changes in unified mode
           container.css('width', (container.width() < expanded) ? expanded : 980);
         }
