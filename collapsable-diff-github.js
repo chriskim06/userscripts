@@ -4,7 +4,7 @@
 // @description Adds a toggle to collapse diffs in GitHub's pull request and commit diff interfaces
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.4.4
+// @version     1.4.5
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -58,15 +58,16 @@ $(function() {
         );
         $('#diff-collapse-button').on('click', function() {
           // Toggle the visibility of all diffs, directions of arrows, and the button
-          var state = ($(this).attr('data-toggle-state') === 'expanded');
+          var button = $(this);
+          var state = (button.attr('data-toggle-state') === 'expanded');
           if (state) {
             blobs.hide();
           } else {
             blobs.show();
           }
           $('.octicon-btn.custom-collapsable').find('path').attr('d', state ? collapsed : expanded);
-          $(this).attr('data-toggle-state', state ? 'collapsed' : 'expanded');
-          $(this).text(state ? 'Expand All' : 'Collapse All');
+          button.attr('data-toggle-state', state ? 'collapsed' : 'expanded');
+          button.text(state ? 'Expand All' : 'Collapse All');
           diffOptions.removeClass('active');
         });
       }
@@ -77,16 +78,18 @@ $(function() {
     var head = $('#partial-discussion-header');
     if (head.length && head.find('.flex-table-item.flex-table-item-primary > a').length === 1) {
       // Turn the branches being compared into links if they aren't already
-      var r = window.location.href.match(/(https:\/\/github\.com\/)([A-Za-z0-9_-]+\/([A-Za-z0-9_-]+))/);
-      if (r) {
+      var url = window.location.href.match(/(https:\/\/github\.com\/)([A-Za-z0-9_-]+(\/[A-Za-z0-9_-]+))/);
+      if (url) {
         $('span.commit-ref.current-branch').each(function() {
-          var branch = $(this).text();
-          if (branch.indexOf(':') === -1) {
-            r[1] += r[2] + '/tree/' + branch;
+          var link;
+          var branch = this.textContent;
+          if (!branch.includes(':')) {
+            link = url[0] + '/tree/' + branch;
           } else {
-            r[1] += branch.split(':')[0] + '/' + r[3] + '/tree/' + branch.split(':')[1];
+            var split = branch.split(':');
+            link = url[1] + split[0] + url[3] + '/tree/' + split[1];
           }
-          $(this).wrap('<a href="' + r[1] + '"></a>');
+          $(this).wrap('<a href="' + link + '"></a>');
         });
       }
     }
