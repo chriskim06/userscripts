@@ -4,7 +4,8 @@
 // @description Changes the link so that clicking branches takes you to the all branches page
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.4.7
+// @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
+// @version     1.4.8
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -12,23 +13,15 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(function() {
+  
+  waitForKeyElements('.repository-content ul.numbers-summary > li:nth-child(2) > a', allBranches);
 
-  function allBranches() {
-    if ($('.repository-content').length) {
-      var link = $('.repository-content').find('ul.numbers-summary').find('li:nth-child(2) > a');
-      if (link.length) {
-        var href = link.attr('href');
-        if (href.length && !href.endsWith('/all')) {
-          link.attr('href', href + '/all');
-        }
-      }
+  function allBranches(jNode) {
+    var href = jNode.attr('href');
+    if (!href.endsWith('/all')) {
+      jNode.attr('href', href + '/all');
     }
   }
-  
-  allBranches();
-  
-  window.$(document).on('pjax:end', function() {
-    allBranches();
-  });
 
 });
+

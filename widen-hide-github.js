@@ -4,7 +4,7 @@
 // @description Adds buttons to allow you to widen the container when viewing files and hide whitespace when viewing pull request diffs
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
-// @version     1.3.8
+// @version     1.3.9
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -57,26 +57,24 @@ $(function() {
     // Toggle page with the w=1 query param in the url to show/hide whitespace
     $('#hide-whitespace-button').click(function() {
       if ($('#files').is(':visible')) {
-        var nav;
         var url = window.location.href;
-        if (url.contains('?w=1')) {
+        if (url.includes('?w=1')) {
           // Check if there is more to the query and remove the whitespace query param
-          nav = url.replace((url.includes('&') ? /w=1\&/ : /\?w=1/), '');
-        } else if (url.contains('&w=1')) {
+          window.location.href = url.replace((url.includes('&') ? /w=1\&/ : /\?w=1/), '');
+        } else if (url.includes('&w=1')) {
           // Remove the appended whitespace query param
-          nav = url.replace(/\&w=1/, '');
+          window.location.href = url.replace(/\&w=1/, '');
         } else {
           // Add the whitespace query param
           var query = url.includes('?') ? '&w=1' : '?w=1';
           if (url.includes('#')) {
             // Insert before any anchors in the url
-            nav = url.slice(0, url.indexOf('#')) + query + url.substr(url.indexOf('#'));
+            window.location.href = url.slice(0, url.indexOf('#')) + query + url.substr(url.indexOf('#'));
           } else {
             // Append to the url
-            nav = url + query;
+            window.location.href = url + query;
           }
         }
-        window.location.href = nav;
       }
       $(this).blur();
     });
