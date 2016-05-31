@@ -10,35 +10,29 @@
  * 6) Refresh your FluidApp.
  */
 
+// Check notification permission initially and then set the interval
 window.fluid.dockBadge = '';
-setTimeout(updateBadge, 1000);
-setInterval(updateBadge, 1000);
+if (window.Notification.permission === 'granted') {
+  setInterval(updateBadge, 1000);
+} else {
+  Notification.requestPermission().then(function(result) {
+    if (result === 'granted') {
+      setInterval(updateBadge, 1000);
+    } else {
+      alert('Need notification permission to use this userscript.');
+    }
+  });
+}
 
-// Looks for and counts unread emails
+// Looks for and counts unread emails in the main Inbox
 function updateBadge() {
   if (document.getElementsByClassName('bl')[0].getAttribute('title') === 'Inbox') {
-    var unreadEmails = document.getElementsByClassName('ss');
-    var count = unreadEmails.length;
+    var count = document.getElementsByClassName('ss').length;
     var prevCount = window.fluid.dockBadge;
     window.fluid.dockBadge = (count === 0) ? '' : count;
     if (count > prevCount && window.Notification) {
-      buildNotification(count);
+      showNotification('Inbox', count);
     }
-  }
-}
-
-// Checks notification permission
-function buildNotification(count) {
-  if (Notification.permission === 'granted') {
-    showNotification('Inbox', count);
-  } else {
-    Notification.requestPermission().then(function(result) {
-      if (result === 'granted') {
-        showNotification('Inbox', count);
-      } else {
-        console.log('Need permission.');
-      }
-    });
   }
 }
 
