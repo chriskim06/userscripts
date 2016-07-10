@@ -3,7 +3,7 @@
 // @namespace   chriskim06
 // @description Moves the control panel to the right of the scripts listing as its own list group
 // @include     https://greasyfork.org/en/users/*
-// @version     1.0.0
+// @version     1.0.1
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -17,7 +17,7 @@
     var div = document.createElement('div');
     div.className = 'list-option-group';
     div.innerHTML = 'Control Panel:';
-    div.appendChild(panel.cloneNode());
+    div.appendChild(panel);
     section.parentNode.removeChild(section);
     groups.insertBefore(div, groups.firstChild);
   }
