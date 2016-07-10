@@ -3,7 +3,7 @@
 // @namespace   chriskim06
 // @description Adds a keyboard shortcut to use GitHub's find file feature
 // @include     https://github.com/*/*
-// @version     1.4
+// @version     1.5
 // @grant       none
 // @locale      en
 // ==/UserScript==
