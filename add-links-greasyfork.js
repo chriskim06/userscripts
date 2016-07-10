@@ -3,7 +3,7 @@
 // @namespace   chriskim06
 // @description Add links to navigate to the update tab and links to install scripts
 // @include     https://greasyfork.org/en/users/*
-// @version     1.3.0
+// @version     1.3.1
 // @grant       none
 // @locale      en
 // ==/UserScript==
