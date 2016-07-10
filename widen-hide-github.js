@@ -37,7 +37,7 @@ $(function() {
           '</a>' +
         '</li>'
     );
-    
+
     // Toggle code container width on click
     $('#code-widen-button').click(function() {
       var container = $('.container.new-discussion-timeline.experiment-repo-nav');
@@ -53,7 +53,7 @@ $(function() {
       }
       $(this).blur();
     });
-    
+
     // Toggle page with the w=1 query param in the url to show/hide whitespace
     $('#hide-whitespace-button').click(function() {
       if ($('#files').is(':visible')) {
@@ -79,5 +79,5 @@ $(function() {
       $(this).blur();
     });
   }
-  
+
 });

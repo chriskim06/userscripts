@@ -20,7 +20,7 @@
   if (checkbox !== null && !checkbox.checked) {
     checkbox.checked = true;
   }
-  
+
   var share = document.getElementById('share');
   if (share !== null) {
     share.style.display = 'none';

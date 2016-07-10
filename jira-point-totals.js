@@ -13,7 +13,7 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 waitForKeyElements('#ghx-pool', getNumPoints);
-  
+
 // jNode is the board
 function getNumPoints(jNode) {
 
@@ -23,7 +23,7 @@ function getNumPoints(jNode) {
     // Initialize each of the values to 0
     columns[$(this).attr('data-id')] = 0;
   });
-  
+
   // For each swimlane...
   jNode.find('.ghx-columns').each(function() {
     // Get each column...
@@ -39,7 +39,7 @@ function getNumPoints(jNode) {
       });
     });
   });
-  
+
   // Append the total point value for this column to the column's name
   columnHeaders.children('li').each(function() {
     var columnId = $(this).attr('data-id');

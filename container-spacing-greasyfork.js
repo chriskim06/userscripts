@@ -14,12 +14,12 @@
   if (el !== null) {
     el.style.marginBottom = '60px';
   }
-  
+
   el = document.getElementById('additional-info');
   if (el !== null) {
     el.style.marginBottom = '60px';
   }
-  
+
   el = document.getElementById('user-deleted-script-list');
   if (el !== null) {
     el.style.marginBottom = '60px';

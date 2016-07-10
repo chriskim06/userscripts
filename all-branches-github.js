@@ -13,7 +13,7 @@
 this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(function() {
-  
+
   waitForKeyElements('.repository-content ul.numbers-summary > li:nth-child(2) > a', allBranches);
 
   function allBranches(jNode) {
