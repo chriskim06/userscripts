@@ -2,7 +2,7 @@
 // @name        Default to All Branches Page (GitHub)
 // @namespace   chriskim06
 // @description Changes the link so that clicking branches takes you to the all branches page
-// @include     https://github.com/*
+// @include     https://github.com/*/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
 // @version     1.4.8

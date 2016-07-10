@@ -11,7 +11,7 @@
 document.querySelector('html').addEventListener('keydown', function(e) {
   if (e.which === 27 && e.target.nodeName !== 'INPUT') {
     var close = document.querySelector('.ghx-iconfont.aui-icon.aui-icon-small.aui-iconfont-close-dialog');
-    if (close != null) {
+    if (close !== null) {
       close.click();
     }
   }

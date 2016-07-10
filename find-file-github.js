@@ -10,15 +10,9 @@
 
 document.querySelector('html').addEventListener('keydown', function(e) {
   if (e.shiftKey && e.which === 80 && e.target.nodeName !== 'INPUT') {
-    var url = window.location.href.match(/(https:\/\/github\.com\/[A-Za-z0-9_-]+\/[A-Za-z0-9_-]+)/);
-    if (url) {
-      var branchMenu = document.getElementsByClassName('btn btn-sm select-menu-button js-menu-target css-truncate')[0];
-      if (branchMenu) {
-        var branch = branchMenu.getElementsByClassName('js-select-button css-truncate-target')[0];
-        if (branch) {
-          window.location.href = url[1] + '/find/' + branch.innerHTML;
-        }
-      }
+    var branch = branchMenu.querySelector('.js-select-button.css-truncate-target');
+    if (branch) {
+      window.location.href = window.location.href + '/find/' + branch.innerHTML;
     }
   }
 });
