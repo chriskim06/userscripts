@@ -2,8 +2,8 @@
 // @name        Floating Menu Bar (GitHub)
 // @namespace   chriskim06
 // @description Makes the menu bar in GitHub stay at the top of the page when scrolling
-// @include     https://github.com/*
-// @version     1.0.5
+// @include     https://github.com/*/*
+// @version     1.0.6
 // @grant       none
 // @locale      en
 // ==/UserScript==
