@@ -5,7 +5,7 @@
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
-// @version     1.4.6
+// @version     1.4.7
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -15,9 +15,9 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 $(function() {
 
   waitForKeyElements('#files > div[id^="diff-"]', addDiffCollapseButtons);
-  waitForKeyElements('.diffbar-item.dropdown.js-menu-container', addCollapseAllButton);
+  waitForKeyElements('.pr-review-tools > .diffbar-item:nth-child(1)', addCollapseAllButton);
   waitForKeyElements('#partial-discussion-header', makeLinks);
-  
+
   function addDiffCollapseButtons(jNode) {
     // Add buttons in each header to allow folding the diff
     var expanded = 'M0 5l6 6 6-6H0z';
@@ -41,39 +41,38 @@ $(function() {
         if (collapseAllButton.length) {
           var state = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper').is(':visible');
           collapseAllButton.attr('data-toggle-state', state ? 'expanded' : 'collapsed');
-          collapseAllButton.text(state ? 'Collapse All' : 'Expand All');
+          collapseAllButton.text(state ? 'Fold All' : 'Show All');
         }
       });
     }
   }
 
   function addCollapseAllButton(jNode) {
-    if (jNode.find('a').length === 2) {
-      // Add an Expand/Collapse All button if its not there
-      var blobs = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper');
-      jNode.find('ul').append(
-        '<a id="diff-collapse-button" ' +
-          'class="dropdown-item" ' +
-          'href="javascript:void(0)" ' +
+    // Add a Show/Fold All button if its not there
+    var blobs = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper');
+    jNode.after(
+      '<div class="diffbar-item">' +
+        '<button id="diff-collapse-button"' +
+          'class="btn btn-sm btn-outline BtnGroup-item" style="width: 75px"' +
           'data-toggle-state="' + (blobs.is(':visible') ? 'expanded' : 'collapsed') + '">' +
-          (blobs.is(':visible') ? 'Collapse All' : 'Expand All') +
-        '</a>'
-      );
-      $('#diff-collapse-button').on('click', function() {
-        // Toggle the visibility of all diffs, directions of arrows, and the button
-        var state = ($(this).attr('data-toggle-state') === 'expanded');
-        if (state) {
-          blobs.hide();
-        } else {
-          blobs.show();
-        }
-        var expanded = 'M0 5l6 6 6-6H0z';
-        var collapsed = 'M0 14l6-6L0 2v12z';
-        $('.octicon-btn.custom-collapsable').find('path').attr('d', state ? collapsed : expanded);
-        $(this).attr('data-toggle-state', state ? 'collapsed' : 'expanded');
-        $(this).text(state ? 'Expand All' : 'Collapse All');
-      });
-    }
+          (blobs.is(':visible') ? 'Fold All' : 'Show All') +
+        '</button>' +
+      '</div>'
+    );
+    $('#diff-collapse-button').on('click', function() {
+      // Toggle the visibility of all diffs, directions of arrows, and the button
+      var state = ($(this).attr('data-toggle-state') === 'expanded');
+      if (state) {
+        blobs.hide();
+      } else {
+        blobs.show();
+      }
+      var expanded = 'M0 5l6 6 6-6H0z';
+      var collapsed = 'M0 14l6-6L0 2v12z';
+      $('.octicon-btn.custom-collapsable').find('path').attr('d', state ? collapsed : expanded);
+      $(this).attr('data-toggle-state', state ? 'collapsed' : 'expanded');
+      $(this).text(state ? 'Show All' : 'Fold All');
+    });
   }
 
   function makeLinks(jNode) {
