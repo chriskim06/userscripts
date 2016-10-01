@@ -5,7 +5,7 @@
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
-// @version     1.4.8
+// @version     1.4.9
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -35,7 +35,7 @@ $(function() {
       jNode.find('.octicon-btn.custom-collapsable').on('click', function() {
         // Toggle the visibility of the diff and the direction of the arrow
         var icon = $(this).find('path');
-        jNode.children('.data.highlight.blob-wrapper').toggle();
+        jNode.children('.data.highlight.blob-wrapper, .data.highlight.empty, .render-wrapper').toggle();
         icon.attr('d', (icon.attr('d') === collapsed) ? expanded : collapsed);
         var collapseAllButton = $('#diff-collapse-button');
         if (collapseAllButton.length) {
@@ -50,7 +50,7 @@ $(function() {
   function addCollapseAllButton(jNode) {
     // Add a Show/Fold All button if its not there
     if (!$('#diff-collapse-button').length) {
-      var blobs = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper');
+      var blobs = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper, .data.highlight.empty, .render-wrapper');
       jNode.after(
         '<div class="diffbar-item">' +
           '<button id="diff-collapse-button"' +
