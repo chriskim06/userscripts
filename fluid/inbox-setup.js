@@ -12,19 +12,6 @@
 
 (function() {
 
-  // Add style for sidenav
-  var style = document.createElement('style');
-  style.innerText = "nav > .lQ{background: #1e1d1d; color: #a4a4a4;}" +
-    ".oin9Fc.cN.hA{background: #323131; color: #f1f1f1;}" +
-    "img.gN{-webkit-filter: invert(1); filter: invert(1);}";
-  document.head.appendChild(style);
-
-  // Remove hangouts
-  var menu = document.getElementsByClassName('rs k2');
-  if (menu.length) {
-    menu[0].removeChild(menu[0].childNodes[0]);
-  }
-
   // References to live NodeLists
   var undo = document.getElementsByClassName('IbRB2e sf ov');
   var closePopup = document.getElementsByClassName('fT IB');

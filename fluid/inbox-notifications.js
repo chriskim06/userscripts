@@ -36,6 +36,9 @@
           var n = new Notification('Inbox', {
             body: (count === 1) ? '1 unread message' : count + ' unread messages'
           });
+          n.onclick = function(e) {
+            window.fluid.activate();
+          };
         }
         window.fluid.dockBadge = (count === 0) ? '' : count;
       }
