@@ -5,7 +5,7 @@
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
-// @version     1.4.9
+// @version     1.5.0
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -16,15 +16,15 @@ $(function() {
 
   waitForKeyElements('#files > div[id^="diff-"]', addDiffCollapseButtons);
   waitForKeyElements('.pr-review-tools > .diffbar-item:nth-child(1)', addCollapseAllButton);
-  waitForKeyElements('#partial-discussion-header', makeLinks);
+  waitForKeyElements('#partial-discussion-header .commit-ref', makeLinks);
 
   function addDiffCollapseButtons(jNode) {
     // Add buttons in each header to allow folding the diff
-    var expanded = 'M0 5l6 6 6-6H0z';
-    var collapsed = 'M0 14l6-6L0 2v12z';
     var info = jNode.find('.file-info');
     if (!info.children().first().is('a')) {
       // If the button isn't there add it and add the event handler
+      var expanded = 'M0 5l6 6 6-6H0z';
+      var collapsed = 'M0 14l6-6L0 2v12z';
       info.prepend(
         '<a class="octicon-btn custom-collapsable" href="javascript:void(0)">' +
           '<svg height="16" width="12" xmlns="http://www.w3.org/2000/svg">' +
@@ -78,21 +78,16 @@ $(function() {
   }
 
   function makeLinks(jNode) {
-    if (jNode.find('.flex-table-item.flex-table-item-primary > a').length === 1) {
+    if (!jNode.children(':first-child').is('a')) {
       // Turn the branches being compared into links if they aren't already
-      var url = window.location.href.match(/(https:\/\/github\.com\/)([A-Za-z0-9_-]+(\/[A-Za-z0-9_-]+))/);
+      var url = window.location.href.match(/(https:\/\/github\.com\/)[A-Za-z0-9_-]+(\/[A-Za-z0-9_-]+)/);
       if (url) {
-        $('span.commit-ref.current-branch').each(function() {
-          var link;
-          var branch = this.textContent;
-          if (!branch.includes(':')) {
-            link = url[0] + '/tree/' + branch;
-          } else {
-            var split = branch.split(':');
-            link = url[1] + split[0] + url[3] + '/tree/' + split[1];
-          }
-          $(this).wrap('<a href="' + link + '"></a>');
-        });
+        var branch = jNode.contents().text();
+        if (!branch.includes(':')) {
+          jNode.contents().wrapAll('<a href="' + url[0] + '/tree/' + branch + '"></a>');
+        } else {
+          jNode.contents().wrapAll('<a href="' + url[1] + branch.replace(':', url[2] + '/tree/') + '"></a>');
+        }
       }
     }
   }
