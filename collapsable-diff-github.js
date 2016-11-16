@@ -5,7 +5,7 @@
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
-// @version     1.5.0
+// @version     1.5.1
 // @grant       none
 // @locale      en
 // ==/UserScript==
