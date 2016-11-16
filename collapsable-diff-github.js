@@ -35,7 +35,7 @@ $(function() {
       jNode.find('.octicon-btn.custom-collapsable').on('click', function() {
         // Toggle the visibility of the diff and the direction of the arrow
         var icon = $(this).find('path');
-        jNode.children('.data.highlight.blob-wrapper, .data.highlight.empty, .render-wrapper').toggle();
+        jNode.children('.data.highlight.blob-wrapper, .data.highlight.empty, .render-wrapper, .js-file-content').toggle();
         icon.attr('d', (icon.attr('d') === collapsed) ? expanded : collapsed);
         var collapseAllButton = $('#diff-collapse-button');
         if (collapseAllButton.length) {
