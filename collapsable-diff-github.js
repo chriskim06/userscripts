@@ -5,7 +5,7 @@
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
-// @version     1.5.1
+// @version     1.5.2
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -50,7 +50,7 @@ $(function() {
   function addCollapseAllButton(jNode) {
     // Add a Show/Fold All button if its not there
     if (!$('#diff-collapse-button').length) {
-      var blobs = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper, .data.highlight.empty, .render-wrapper');
+      var blobs = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper, .data.highlight.empty, .render-wrapper, .js-file-content');
       jNode.after(
         '<div class="diffbar-item">' +
           '<button id="diff-collapse-button"' +
