@@ -5,7 +5,7 @@
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
-// @version     1.5.2
+// @version     1.5.3
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -14,7 +14,7 @@ this.$ = this.jQuery = jQuery.noConflict(true);
 
 $(function() {
 
-  waitForKeyElements('#files > div[id^="diff-"]', addDiffCollapseButtons);
+  waitForKeyElements('#files div[id^="diff-"]', addDiffCollapseButtons);
   waitForKeyElements('.pr-review-tools > .diffbar-item:nth-child(1)', addCollapseAllButton);
   waitForKeyElements('#partial-discussion-header .commit-ref', makeLinks);
 
