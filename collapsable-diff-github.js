@@ -5,7 +5,7 @@
 // @include     https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
-// @version     1.5.3
+// @version     1.5.4
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -19,12 +19,13 @@ $(function() {
   waitForKeyElements('#partial-discussion-header .commit-ref', makeLinks);
 
   function addDiffCollapseButtons(jNode) {
+    var expanded = 'M0 5l6 6 6-6H0z';
+    var collapsed = 'M0 14l6-6L0 2v12z';
+
     // Add buttons in each header to allow folding the diff
     var info = jNode.find('.file-info');
     if (!info.children().first().is('a')) {
-      // If the button isn't there add it and add the event handler
-      var expanded = 'M0 5l6 6 6-6H0z';
-      var collapsed = 'M0 14l6-6L0 2v12z';
+      // Add the button if it isn't there
       info.prepend(
         '<a class="octicon-btn custom-collapsable" href="javascript:void(0)">' +
           '<svg height="16" width="12" xmlns="http://www.w3.org/2000/svg">' +
@@ -32,18 +33,26 @@ $(function() {
           '</svg>' +
         '</a>'
       );
-      jNode.find('.octicon-btn.custom-collapsable').on('click', function() {
-        // Toggle the visibility of the diff and the direction of the arrow
-        var icon = $(this).find('path');
-        jNode.children('.data.highlight.blob-wrapper, .data.highlight.empty, .render-wrapper, .js-file-content').toggle();
-        icon.attr('d', (icon.attr('d') === collapsed) ? expanded : collapsed);
-        var collapseAllButton = $('#diff-collapse-button');
-        if (collapseAllButton.length) {
-          var state = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper').is(':visible');
-          collapseAllButton.attr('data-toggle-state', state ? 'expanded' : 'collapsed');
-          collapseAllButton.text(state ? 'Fold All' : 'Show All');
-        }
-      });
+    }
+
+    // Add the event handler if its not already bound to the arrow
+    var btn = jNode.find('.octicon-btn.custom-collapsable');
+    if (btn.length) {
+      var events = $.data(btn.get(0), 'events');
+      if (!events || !events.click) {
+        btn.on('click', function() {
+          // Toggle the visibility of the diff and the direction of the arrow
+          var icon = $(this).find('path');
+          jNode.children('.data.highlight.blob-wrapper, .data.highlight.empty, .render-wrapper, .js-file-content').toggle();
+          icon.attr('d', (icon.attr('d') === collapsed) ? expanded : collapsed);
+          var collapseAllButton = $('#diff-collapse-button');
+          if (collapseAllButton.length) {
+            var state = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper').is(':visible');
+            collapseAllButton.attr('data-toggle-state', state ? 'expanded' : 'collapsed');
+            collapseAllButton.text(state ? 'Fold All' : 'Show All');
+          }
+        });
+      }
     }
   }
 
@@ -62,11 +71,12 @@ $(function() {
       );
       $('#diff-collapse-button').on('click', function() {
         // Toggle the visibility of all diffs, directions of arrows, and the button
+        var diffs = $('#files').find('div[id^="diff-"]').children('.data.highlight.blob-wrapper, .data.highlight.empty, .render-wrapper, .js-file-content');
         var state = ($(this).attr('data-toggle-state') === 'expanded');
         if (state) {
-          blobs.hide();
+          diffs.hide();
         } else {
-          blobs.show();
+          diffs.show();
         }
         var expanded = 'M0 5l6 6 6-6H0z';
         var collapsed = 'M0 14l6-6L0 2v12z';
