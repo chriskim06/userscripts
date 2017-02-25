@@ -3,7 +3,7 @@
 // @namespace   chriskim06
 // @description Add links to navigate to the update tab and links to install scripts
 // @include     https://greasyfork.org/en/users/*
-// @version     1.3.2
+// @version     1.3.3
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -14,8 +14,6 @@
     var el = document.createElement(tag);
     if (tag === 'a') {
       el.href = href;
-    } else {
-      el.className = 'name-description-separator';
     }
     el.innerHTML = text;
     link.parentNode.insertBefore(el, link.nextElementSibling);
