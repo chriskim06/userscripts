@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name        Greasy Fork Control Panel
+// @name        Greasy Fork Panel Layout
 // @namespace   chriskim06
-// @description Moves the control panel to the right of the scripts listing as its own list group
+// @description Moves the control panel to the right of the scripts listing as its own list group and removes ad
 // @include     https://greasyfork.org/en/users/*
-// @version     1.0.1
+// @version     1.0.2
 // @grant       none
 // @locale      en
 // ==/UserScript==
@@ -20,6 +20,13 @@
     div.appendChild(panel);
     section.parentNode.removeChild(section);
     groups.insertBefore(div, groups.firstChild);
+  }
+
+  var ads = document.querySelectorAll('.ad');
+  if (ads.length) {
+    for (var i = 0; i < ads.length; i++) {
+      ads[i].style.display = 'none';
+    }
   }
 
 })();
