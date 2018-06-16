@@ -1,11 +1,9 @@
 // ==UserScript==
 // @name        Backspace History
-// @namespace   chriskim06
+// @namespace   https://github.com/chriskim06/userscripts
 // @description Makes the backspace key go back in history instead of modifying the search string
-// @include     https://www.google.com/*
-// @version     1.7
-// @grant       none
-// @locale      en
+// @match       https://www.google.com/*
+// @version     1.8
 // ==/UserScript==
 
 document.querySelector('html').addEventListener('keydown', function(e) {

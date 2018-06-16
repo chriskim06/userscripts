@@ -1,13 +1,11 @@
 // ==UserScript==
 // @name        ESPN Fantasy Football
-// @namespace   chriskim06
+// @namespace   https://github.com/chriskim06/userscripts
 // @description Moves the projected points column next to the opponent column
-// @include     http://games.espn.com/ffl/clubhouse?leagueId=*&teamId=*
+// @match       http://games.espn.com/ffl/clubhouse?leagueId=*&teamId=*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
-// @version     1.0.0
-// @grant       none
-// @locale      en
+// @version     1.0.1
 // ==/UserScript==
 
 this.$ = this.jQuery = jQuery.noConflict(true);

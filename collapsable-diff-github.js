@@ -1,13 +1,11 @@
 // ==UserScript==
 // @name        Collapsable Diffs and Linked Branches (GitHub)
-// @namespace   chriskim06
+// @namespace   https://github.com/chriskim06/userscripts
 // @description Adds a toggle to collapse diffs in GitHub's pull request and commit diff interfaces
-// @include     https://github.com/*
+// @match       https://github.com/*
 // @require     http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // @require     https://greasyfork.org/scripts/5392-waitforkeyelements/code/WaitForKeyElements.js?version=19641
-// @version     1.5.5
-// @grant       none
-// @locale      en
+// @version     1.5.6
 // ==/UserScript==
 
 this.$ = this.jQuery = jQuery.noConflict(true);

@@ -1,12 +1,10 @@
 // ==UserScript==
 // @name        Greasy Fork Default Behavior
-// @namespace   chriskim06
+// @namespace   https://github.com/chriskim06/userscripts
 // @description Add/edit scripts with syntax highlighting enabled by default and hide share stuff
-// @include     /https://greasyfork.org/en/scripts/\w+(-|/).*/
-// @include     https://greasyfork.org/en/script_versions/new
-// @version     1.2.5
-// @grant       none
-// @locale      en
+// @match       /https://greasyfork.org/en/scripts/\w+(-|/).*/
+// @match       https://greasyfork.org/en/script_versions/new
+// @version     1.2.6
 // ==/UserScript==
 
 (function() {
@@ -27,3 +25,4 @@
   }
 
 })();
+

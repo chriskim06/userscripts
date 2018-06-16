@@ -1,44 +1,47 @@
 // ==UserScript==
 // @name        Greasy Fork Links
-// @namespace   chriskim06
+// @namespace   https://github.com/chriskim06/userscripts
 // @description Add links to navigate to the update tab and links to install scripts
-// @include     https://greasyfork.org/en/users/*
-// @version     1.3.3
-// @grant       none
-// @locale      en
+// @match       https://greasyfork.org/en/users/*
+// @version     1.3.4
 // ==/UserScript==
 
 (function() {
 
-  function createNewElement(link, tag, text, href) {
-    var el = document.createElement(tag);
-    if (tag === 'a') {
+  // Adds an element next to the provided link
+  function insertElement(link, text, href) {
+    var el = document.createElement(href ? 'a' : 'span');
+    if (href) {
       el.href = href;
     }
-    el.innerHTML = text;
+    el.innerText = text;
     link.parentNode.insertBefore(el, link.nextElementSibling);
   }
 
-  if (document.querySelector('#user-script-list') !== null) {
-    var currentUser = document.querySelector('#nav-user-info > .user-profile-link > a');
-    var loggedIn = (currentUser !== null && currentUser.innerHTML === document.title);
+  // Adds a new link plus a separator
+  function addLink(link, text, href, separator) {
+    insertElement(link, text, href);
+    insertElement(link, separator, null);
+  }
+
+  if (document.querySelector('#user-script-list')) {
+    var loggedIn = document.querySelector('#nav-user-info > .user-profile-link');
     var items = document.querySelectorAll('#user-script-list > li');
     for (var i = 0; i < items.length; i++) {
       var link = items[i].querySelector('a');
       if (loggedIn) {
-        createNewElement(link, 'a', 'Edit', '/en/scripts/' + items[i].dataset.scriptId + '/versions/new');
-        createNewElement(link, 'span', ' - ', null);
-        createNewElement(link, 'a', 'Delete', link.href + '/delete');
-        createNewElement(link, 'span', '/', null);
+        addLink(link, 'Edit', '/en/scripts/' + items[i].getAttribute('data-script-id') + '/versions/new', ' - ');
+        addLink(link, 'Delete', link.href + '/delete', '/');
       }
-      createNewElement(link, 'a', 'Install', link.href + '/code/' + link.innerHTML.replace(/ /g, '%20') + '.user.js');
-      createNewElement(link, 'span', ' - ', null);
-      link.href = link.href + '/code';
+      addLink(link, 'Install', link.href + '/code/' + encodeURIComponent(link.innerText) + '.user.js', ' - ');
     }
-    var scripts = document.querySelector('#user-script-list').parentElement.querySelector('header > h3');
-    if (scripts !== null) {
-      scripts.innerHTML = 'Scripts (' + items.length + ')';
+
+    // Display number of userscripts
+    var scripts = document.querySelector('body > .width-constraint > section:nth-child(3) > header > h3');
+    if (scripts) {
+      scripts.innerText = 'Scripts (' + items.length + ')';
     }
   }
 
 })();
+

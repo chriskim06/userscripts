@@ -1,11 +1,9 @@
 // ==UserScript==
 // @name        Greasy Fork Panel Layout
-// @namespace   chriskim06
+// @namespace   https://github.com/chriskim06/userscripts
 // @description Moves the control panel to the right of the scripts listing as its own list group and removes ad
-// @include     https://greasyfork.org/en/users/*
-// @version     1.0.2
-// @grant       none
-// @locale      en
+// @match       https://greasyfork.org/en/users/*
+// @version     1.0.3
 // ==/UserScript==
 
 (function() {
@@ -30,3 +28,4 @@
   }
 
 })();
+

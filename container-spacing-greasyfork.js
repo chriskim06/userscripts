@@ -1,15 +1,14 @@
 // ==UserScript==
 // @name        Greasy Fork Container Spacing
-// @namespace   chriskim06
+// @namespace   https://github.com/chriskim06/userscripts
 // @description Adds a small margin to the bottom of the code container and author description in Greasy Fork
-// @include     https://greasyfork.org/en/scripts/*
-// @include     https://greasyfork.org/en/users/*
+// @match       https://greasyfork.org/en/scripts/*
+// @match       https://greasyfork.org/en/users/*
 // @version     1.2.4
-// @grant       none
-// @locale      en
 // ==/UserScript==
 
 (function() {
+
   var el = document.getElementById('code-container');
   if (el !== null) {
     el.style.marginBottom = '60px';
@@ -29,4 +28,6 @@
       el.style.marginBottom = '60px';
     }
   }
+
 })();
+
